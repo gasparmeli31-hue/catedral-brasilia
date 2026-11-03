@@ -1,0 +1,330 @@
+/* ---------- Paradas de fotos: presentación con zoom lento ---------- */
+.toma-fotos { position: absolute; inset: 0; background: #000; }
+.toma-fotos .kb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.toma-fotos .kb.visible { opacity: 1; animation: zoom-lento 14s ease-out forwards; }
+@keyframes zoom-lento { from { transform: scale(1); } to { transform: scale(1.12); } }
+.escenario.en-fotos { cursor: default; }
+.escenario.girando .toma { transition: left 0.45s cubic-bezier(0.3, 0.6, 0.3, 1), opacity 0.35s ease; }
+
+/* ---------- Cono de mirada en el plano ---------- */
+.mapa .cono {
+  --ancho: 80deg;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: conic-gradient(from calc(var(--ancho) / -2), rgba(47, 124, 246, 0.45) 0 var(--ancho), transparent 0);
+  -webkit-mask: radial-gradient(circle, #000 25%, transparent 70%);
+  mask: radial-gradient(circle, #000 25%, transparent 70%);
+  transition: transform 0.25s ease;
+}
+.mapa .cono.arriba { background: radial-gradient(circle, rgba(47, 124, 246, 0.45) 30%, transparent 60%); }
+
+/* ---------- Activar el sonido (si el navegador lo bloquea hasta el primer toque) ---------- */
+.activar-sonido {
+  position: fixed;
+  left: 50%;
+  bottom: 150px;
+  z-index: 106;
+  transform: translateX(-50%);
+  padding: 14px 24px;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  color: #111;
+  background: var(--text);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  animation: latido 2s ease-in-out infinite;
+}
+
+/* ---------- ¿Sabías que…? ---------- */
+.sabias {
+  position: fixed;
+  left: 16px;
+  top: 104px;
+  z-index: 100;
+  max-width: 340px;
+  padding: 14px 16px;
+  color: var(--text);
+  background: var(--glass-strong);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateX(-12px);
+  pointer-events: none;
+  transition: opacity 0.4s, transform 0.4s;
+}
+.sabias.visible { opacity: 1; transform: none; }
+.sabias-titulo { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.sabias-texto { margin: 4px 0 0; font-size: 15px; line-height: 1.45; }
+
+@media (max-width: 980px) and (min-width: 641px) {
+  .sabias { top: 148px; }
+}
+
+/* ---------- Estado de la visita guiada ---------- */
+.guiada-estado {
+  position: fixed;
+  left: 50%;
+  top: 16px;
+  z-index: 104;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.punto-vivo { width: 8px; height: 8px; border-radius: 50%; background: #ff5a4f; animation: latido 1.6s ease-in-out infinite; }
+@keyframes latido { 50% { opacity: 0.3; } }
+.guiada-estado.libre .punto-vivo, .guiada-estado.libre .guiada-texto { display: none; }
+.guiada-boton {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  background: var(--text);
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.ctrl-chico.apagado { opacity: 0.45; text-decoration: line-through; }
+
+/* ---------- Pantalla de inicio ---------- */
+.inicio {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #07080b;
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+.inicio.oculto { opacity: 0; visibility: hidden; }
+.inicio-fondo {
+  position: absolute;
+  inset: -4%;
+  background: url("galeria/atardecer.jpg") center / cover;
+  animation: zoom-lento 30s ease-in-out infinite alternate;
+}
+.inicio::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 6, 9, 0.88) 0%, rgba(5, 6, 9, 0.55) 45%, rgba(5, 6, 9, 0.1) 100%),
+    linear-gradient(0deg, rgba(5, 6, 9, 0.75), transparent 50%);
+}
+.inicio-contenido { position: relative; z-index: 1; padding: 0 6vw 7vh; max-width: 760px; }
+.inicio-lugar { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.inicio h1 { margin: 8px 0 10px; font-size: clamp(40px, 6vw, 84px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.inicio-bajada { margin: 0 0 32px; font-size: clamp(17px, 1.6vw, 22px); color: var(--muted); }
+.inicio-botones, .final-botones { display: flex; flex-wrap: wrap; gap: 14px; }
+.inicio-boton {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 260px;
+  padding: 16px 22px 16px 16px;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.inicio-boton:hover { background: rgba(255, 255, 255, 0.18); }
+.inicio-boton.principal { color: #111; background: var(--text); border-color: transparent; }
+.inicio-boton.principal small { color: rgba(0, 0, 0, 0.6); }
+.inicio-boton b { display: block; font-size: 18px; font-weight: 600; }
+.inicio-boton small { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+.inicio-icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  border-radius: 50%;
+  background: rgba(127, 127, 127, 0.2);
+}
+.inicio-extras { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 26px; font-size: 13px; color: var(--muted); }
+.inicio-extras button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.inicio-carga { display: none; align-items: center; gap: 10px; margin: 18px 0 0; font-size: 13px; color: var(--muted); }
+.inicio.cargando .inicio-carga { display: flex; }
+.inicio-barra { width: 120px; height: 3px; background: rgba(255, 255, 255, 0.15); border-radius: 2px; overflow: hidden; }
+.inicio-barra span { display: block; width: 40%; height: 100%; background: var(--accent); animation: cargando 1.2s ease-in-out infinite; }
+@keyframes cargando { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+/* ---------- Final ---------- */
+.final {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 24px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(5, 6, 9, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.final h2 { margin: 0; font-size: clamp(30px, 4vw, 56px); letter-spacing: -0.02em; }
+
+/* ---------- Quiz y línea de tiempo ---------- */
+.panel-dialogo {
+  width: min(860px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100% - 48px);
+  padding: 32px;
+  color: var(--text);
+  background: #121417;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.panel-dialogo::backdrop { background: rgba(0, 0, 0, 0.7); }
+.dialogo-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.quiz-num { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.quiz-pregunta { margin: 8px 40px 22px 0; font-size: clamp(22px, 2.4vw, 32px); }
+.quiz-opciones { display: grid; gap: 10px; }
+.quiz-opcion {
+  padding: 16px 20px;
+  font: inherit;
+  font-size: 18px;
+  text-align: left;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.quiz-opcion:hover:not(:disabled) { background: rgba(255, 255, 255, 0.13); }
+.quiz-opcion:disabled { cursor: default; opacity: 0.6; }
+.quiz-opcion.bien { opacity: 1; border-color: #3ecf8e; background: rgba(62, 207, 142, 0.15); }
+.quiz-opcion.mal { opacity: 1; border-color: #ff5a4f; background: rgba(255, 90, 79, 0.15); }
+.quiz-feedback { min-height: 1.4em; margin: 16px 0; font-size: 17px; font-weight: 500; }
+.quiz-siguiente { min-width: 0; justify-content: center; padding: 12px 24px; font-size: 16px; font-weight: 600; }
+
+.linea { width: min(1200px, calc(100% - 32px)); }
+.linea h2 { margin: 0 40px 18px 0; font-size: 26px; }
+.linea-lista {
+  display: flex;
+  gap: 14px;
+  margin: 0;
+  padding: 4px 4px 12px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.linea-lista li {
+  flex: 0 0 250px;
+  scroll-snap-align: start;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.linea-lista img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.linea-anio { display: block; margin: 12px 14px 0; font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+.linea-lista p { margin: 4px 14px 16px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+
+/* ---------- Foco visible para teclado y control remoto ---------- */
+:is(button, a, li[tabindex]):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.inicio-boton:focus-visible, .quiz-opcion:focus-visible, .linea-lista li:focus-visible { outline: 4px solid var(--accent); outline-offset: 4px; transform: scale(1.03); }
+
+/* ---------- Modo TV: todo más grande, sin elementos de mouse ---------- */
+body.tv.sin-cursor, body.tv.sin-cursor * { cursor: none !important; }
+body.tv .solo-pc, body.tv:not(.tactil) .rooms { display: none !important; }
+body.tv.tactil .rooms { zoom: 1.35; left: 24px; bottom: 18px; max-width: calc(74vw - 120px); }
+body.tv.tactil .credito-video { bottom: 58px; left: 18px; }
+body.tv.tactil .controles { bottom: 64px; }
+body.tv.tactil .activar-sonido { bottom: 200px; }
+body.tv .hotspot { width: 52px; height: 52px; }
+body.tv .hotspot::before { width: 20px; height: 3px; }
+body.tv .hotspot::after { width: 3px; height: 20px; }
+body.tv.tactil .punto .etiqueta { opacity: 1; font-size: 17px; padding: 7px 14px; }
+body.tv :is(.brand, .acciones, .controles, .ajustes, .guiada-estado, .credito-video) { zoom: 1.35; }
+body.tv .mapa { width: 210px; bottom: 90px; right: 24px; }
+body.tv .controles { bottom: 30px; }
+body.tv .ajustes { bottom: 22px; right: 24px; }
+body.tv .credito-video { bottom: 18px; }
+body.tv .activar-sonido { font-size: 26px; padding: 20px 34px; }
+body.tv .sabias { max-width: 460px; top: 150px; left: 24px; }
+body.tv .sabias-titulo { font-size: 15px; }
+body.tv .sabias-texto { font-size: 21px; }
+body.tv .product { zoom: 1.3; }
+body.tv .hint { font-size: 18px; bottom: 190px; }
+body.tv .inicio-contenido { max-width: 1000px; }
+body.tv .inicio-boton { min-width: 340px; padding: 22px 28px 22px 20px; }
+body.tv .inicio-boton b { font-size: 24px; }
+body.tv .inicio-boton small { font-size: 16px; }
+body.tv .inicio-extras button { font-size: 17px; padding: 10px 18px; }
+
+@media (max-width: 640px) {
+  .solo-pc { display: none !important; }
+  .sabias { left: 12px; right: 64px; max-width: none; top: 124px; padding: 10px 12px; }
+  .sabias-texto { font-size: 14px; }
+  .guiada-estado { top: auto; bottom: 200px; }
+  .inicio-boton { min-width: 0; width: 100%; }
+  .inicio-contenido { padding: 0 20px 6vh; }
+}
+
+/* Diálogos más grandes en la TV */
+body.tv .linea-lista li { flex-basis: 320px; }
+body.tv .linea-anio { font-size: 36px; }
+body.tv .linea-lista p { font-size: 18px; }
+body.tv .linea h2 { font-size: 34px; }
+body.tv .quiz-pregunta { font-size: 40px; }
+body.tv .quiz-opcion { font-size: 26px; padding: 20px 26px; }
+body.tv .quiz-feedback { font-size: 22px; }
+body.tv .quiz-siguiente { font-size: 20px; padding: 16px 32px; }
+body.tv .panel-dialogo { width: min(1300px, calc(100% - 80px)); padding: 44px; }

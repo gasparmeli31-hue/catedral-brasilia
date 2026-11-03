@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Catedral de Brasília 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.15.1/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin@5.15.1/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/map-plugin@5.15.1/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/virtual-tour-plugin@5.15.1/index.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="catedral.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+        "@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.15.1/index.module.js",
+        "@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin@5.15.1/index.module.js",
+        "@photo-sphere-viewer/map-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/map-plugin@5.15.1/index.module.js",
+        "@photo-sphere-viewer/virtual-tour-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/virtual-tour-plugin@5.15.1/index.module.js",
+        "@photo-sphere-viewer/gyroscope-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/gyroscope-plugin@5.15.1/index.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="viewer"></div>
+
+  <header class="brand">
+    <h1 id="brand-name"></h1>
+    <p id="brand-sub"></p>
+  </header>
+
+  <div class="acciones">
+    <a href="index.html" class="accion">▶ Recorrido con video real</a>
+    <a id="street-view" class="accion" target="_blank" rel="noopener">Ver fotos 360 reales en Street View ↗</a>
+    <button id="ver-creditos" class="accion">Créditos</button>
+  </div>
+
+  <div id="demo-banner" class="demo-banner" hidden></div>
+
+  <div id="hint" class="hint">Arrastrá para mirar alrededor · Tocá las flechas del piso para caminar · Tocá los <b>+</b> para saber más</div>
+
+  <nav id="rooms" class="rooms" aria-label="Lugares del recorrido"></nav>
+
+  <aside id="product" class="product" aria-hidden="true">
+    <button class="product-close" aria-label="Cerrar">×</button>
+    <img class="product-img" alt="" hidden>
+    <div class="product-body">
+      <h2 class="product-name"></h2>
+      <p class="product-price"></p>
+      <p class="product-desc"></p>
+      <a class="product-credit" target="_blank" rel="noopener" hidden></a>
+      <a class="product-cta" target="_blank" rel="noopener" hidden></a>
+    </div>
+  </aside>
+
+  <dialog id="creditos">
+    <button aria-label="Cerrar">×</button>
+    <h2>Créditos y fuentes</h2>
+    <p>
+      El recorrido 360° es una <strong>recreación 3D</strong> hecha para este sitio a partir de las medidas y
+      descripciones públicas de la catedral (16 columnas en hiperboloide, nave 3 m bajo la plaza, espejo de
+      agua de 12 m, ángeles de 2,22 / 3,4 / 4,25 m). Es una aproximación: las proporciones son fieles, los
+      detalles están simplificados.
+    </p>
+    <p>Fotos reales (Wikimedia Commons, licencias libres):</p>
+    <ul></ul>
+    <p>Datos: artículo «Catedral Metropolitana de Brasília» de Wikipedia en portugués.</p>
+  </dialog>
+
+  <div id="carga" class="carga">
+    <p>Construyendo la catedral…</p>
+    <div class="carga-barra"><span></span></div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

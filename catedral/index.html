@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Catedral de Brasília</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="catedral.css">
+  <link rel="stylesheet" href="real.css">
+  <link rel="stylesheet" href="guia.css">
+</head>
+<body>
+  <div id="escenario" class="escenario">
+    <canvas id="paso" class="paso"></canvas>
+  </div>
+
+  <header class="brand">
+    <h1 id="brand-name"></h1>
+    <p id="brand-sub"></p>
+  </header>
+
+  <div class="acciones">
+    <button id="ver-galeria" class="accion accion-fotos" data-t="fotos"></button>
+    <button id="ver-historia" class="accion" data-t="historia"></button>
+    <a href="360.html" class="accion solo-pc" data-t="vista360"></a>
+    <a id="street-view" class="accion solo-pc" target="_blank" rel="noopener" data-t="streetView"></a>
+    <button id="ver-creditos" class="accion" data-t="creditos"></button>
+    <button id="ir-inicio" class="accion" data-t="inicio"></button>
+  </div>
+
+  <div id="hint" class="hint"></div>
+
+  <!-- Estado de la visita guiada -->
+  <div id="guiada-estado" class="guiada-estado" hidden>
+    <span class="punto-vivo"></span>
+    <span class="guiada-texto"></span>
+    <button id="guiada-pausa" class="guiada-boton"></button>
+  </div>
+
+  <!-- Si el navegador no deja sonar la audioguía hasta que alguien toque la pantalla -->
+  <button id="activar-sonido" class="activar-sonido" hidden>🔊 Tocá para activar el sonido</button>
+
+  <!-- ¿Sabías que…? -->
+  <aside id="sabias" class="sabias" aria-live="polite">
+    <span class="sabias-titulo"></span>
+    <p class="sabias-texto"></p>
+  </aside>
+
+  <div class="controles">
+    <button id="volver" class="ctrl-chico" aria-label="◀">▼</button>
+    <button id="avanzar" class="avanzar" aria-label="▲">
+      <span class="flecha">▲</span>
+      <span class="destino"></span>
+    </button>
+    <button id="saltar" class="ctrl-chico" hidden aria-label="⏭">⏭</button>
+  </div>
+
+  <div class="ajustes">
+    <button id="narracion" class="ctrl-chico" aria-label="Audioguía" title="Audioguía">🎧</button>
+    <button id="velocidad" class="ctrl-chico" aria-label="Velocidad">2×</button>
+    <button id="sonido" class="ctrl-chico" aria-label="Sonido del video" title="Sonido del video">🔇</button>
+  </div>
+
+  <nav id="rooms" class="rooms" aria-label="Paradas"></nav>
+
+  <div id="mapa" class="mapa" aria-label="Plano">
+    <img src="plano.svg" alt="">
+    <span class="cono"></span>
+    <span class="yo"></span>
+  </div>
+
+  <p id="credito-video" class="credito-video"></p>
+
+  <aside id="product" class="product" aria-hidden="true">
+    <button class="product-close" aria-label="×">×</button>
+    <div class="ficha-fotos" hidden>
+      <img class="product-img" alt="">
+      <button class="ficha-ant" aria-label="‹">‹</button>
+      <button class="ficha-sig" aria-label="›">›</button>
+      <span class="ficha-num"></span>
+    </div>
+    <div class="product-body">
+      <h2 class="product-name"></h2>
+      <p class="product-desc"></p>
+      <a class="product-credit" target="_blank" rel="noopener" hidden></a>
+    </div>
+  </aside>
+
+  <!-- Pantalla de inicio -->
+  <section id="inicio" class="inicio">
+    <div class="inicio-fondo"></div>
+    <div class="inicio-contenido">
+      <p class="inicio-lugar">Brasília · Brasil</p>
+      <h1>Catedral de Brasília</h1>
+      <p class="inicio-bajada" data-t="bienvenida"></p>
+      <div class="inicio-botones">
+        <button id="empezar-guiada" class="inicio-boton principal">
+          <span class="inicio-icono">▶</span>
+          <span><b data-t="guiada"></b><small data-t="guiadaDesc"></small></span>
+        </button>
+        <button id="empezar-libre" class="inicio-boton">
+          <span class="inicio-icono">◎</span>
+          <span><b data-t="libre"></b><small data-t="libreDesc"></small></span>
+        </button>
+      </div>
+      <div class="inicio-extras">
+        <button id="inicio-fotos" data-t="fotos"></button>
+        <button id="inicio-historia" data-t="historia"></button>
+        <button id="inicio-creditos" data-t="creditos"></button>
+      </div>
+      <p class="inicio-carga"><span class="inicio-barra"><span></span></span> <span data-t="cargando"></span></p>
+    </div>
+  </section>
+
+  <!-- Final de la visita -->
+  <section id="final" class="final" hidden>
+    <h2 data-t="finTitulo"></h2>
+    <div class="final-botones">
+      <button id="final-quiz" class="inicio-boton principal"><span class="inicio-icono">?</span><span><b data-t="hacerQuiz"></b></span></button>
+      <button id="final-reiniciar" class="inicio-boton"><span class="inicio-icono">↺</span><span><b data-t="volverEmpezar"></b></span></button>
+    </div>
+  </section>
+
+  <dialog id="quiz" class="panel-dialogo quiz">
+    <button class="dialogo-cerrar" aria-label="×">×</button>
+    <p class="quiz-num"></p>
+    <h2 class="quiz-pregunta"></h2>
+    <div class="quiz-opciones"></div>
+    <p class="quiz-feedback" aria-live="polite"></p>
+    <button class="quiz-siguiente inicio-boton principal" hidden></button>
+  </dialog>
+
+  <dialog id="historia" class="panel-dialogo linea">
+    <button class="dialogo-cerrar" aria-label="×">×</button>
+    <h2 data-t="lineaTitulo"></h2>
+    <ol class="linea-lista"></ol>
+  </dialog>
+
+  <dialog id="creditos">
+    <button aria-label="×">×</button>
+    <h2 data-t="creditosTitulo"></h2>
+    <p id="creditos-video"></p>
+    <p data-t="creditosFichas"></p>
+    <ul id="creditos-fichas"></ul>
+    <p data-t="creditosGaleria"></p>
+    <ul id="creditos-galeria"></ul>
+    <p data-t="creditosVoz"></p>
+    <p data-t="creditosDatos"></p>
+  </dialog>
+
+  <dialog id="galeria" class="galeria" aria-label="Galería">
+    <header>
+      <div>
+        <h2></h2>
+        <p class="galeria-cuenta"></p>
+      </div>
+      <button class="galeria-cerrar" aria-label="×">×</button>
+    </header>
+    <div class="galeria-cuerpo"></div>
+  </dialog>
+
+  <dialog id="foto" class="foto" aria-label="Foto">
+    <div class="foto-marco"><img alt=""></div>
+    <button class="foto-ant" aria-label="‹">‹</button>
+    <button class="foto-sig" aria-label="›">›</button>
+    <button class="foto-cerrar" aria-label="×">×</button>
+    <p class="foto-pie">
+      <span class="foto-titulo"></span>
+      <a target="_blank" rel="noopener"></a>
+      <span class="foto-num"></span>
+    </p>
+  </dialog>
+
+  <script type="module" src="real.js"></script>
+</body>
+</html>

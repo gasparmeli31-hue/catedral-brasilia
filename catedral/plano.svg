@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="780" viewBox="0 0 600 780">
+  <!-- Plano de la Catedral de Brasília a escala: 7 px = 1 m, centro de la nave en (300, 300). Norte arriba. -->
+  <rect width="600" height="780" fill="#ebe7de"/>
+  <circle cx="300" cy="300" r="294" fill="#b7d2e3"/>
+  <circle cx="300" cy="300" r="213.5" fill="#fbfaf7" stroke="#3a3632" stroke-width="3"/>
+  <circle cx="300" cy="300" r="41.300000000000004" fill="none" stroke="#c9c4ba" stroke-width="2" stroke-dasharray="4 4"/>
+  <g stroke="#3a3632" stroke-width="7" stroke-linecap="round"><line x1="500.5" y1="260.1" x2="514.2" y2="257.4"/><line x1="470.0" y1="186.4" x2="481.6" y2="178.7"/><line x1="413.6" y1="130.0" x2="421.3" y2="118.4"/><line x1="339.9" y1="99.5" x2="342.6" y2="85.8"/><line x1="260.1" y1="99.5" x2="257.4" y2="85.8"/><line x1="186.4" y1="130.0" x2="178.7" y2="118.4"/><line x1="130.0" y1="186.4" x2="118.4" y2="178.7"/><line x1="99.5" y1="260.1" x2="85.8" y2="257.4"/><line x1="99.5" y1="339.9" x2="85.8" y2="342.6"/><line x1="130.0" y1="413.6" x2="118.4" y2="421.3"/><line x1="186.4" y1="470.0" x2="178.7" y2="481.6"/><line x1="260.1" y1="500.5" x2="257.4" y2="514.2"/><line x1="339.9" y1="500.5" x2="342.6" y2="514.2"/><line x1="413.6" y1="470.0" x2="421.3" y2="481.6"/><line x1="470.0" y1="413.6" x2="481.6" y2="421.3"/><line x1="500.5" y1="339.9" x2="514.2" y2="342.6"/></g>
+  <rect x="291.6" y="191.5" width="16.8" height="308" fill="#c9575a"/>
+  <g fill="#c7a585">
+    <rect x="311.2" y="234.89999999999998" width="66.5" height="149.79999999999998" rx="3"/>
+    <rect x="222.3" y="234.89999999999998" width="66.5" height="149.79999999999998" rx="3"/>
+  </g>
+  <rect x="237" y="118" width="126" height="63" fill="#dedad2" stroke="#9c958a" stroke-width="2" rx="4"/>
+  <rect x="280.05" y="512.8" width="39.9" height="151.20000000000002" fill="#5a5d63"/>
+  <g fill="#6b6f55">
+    <circle cx="268.5" cy="685" r="5"/><circle cx="331.5" cy="685" r="5"/>
+    <circle cx="268.5" cy="720" r="5"/><circle cx="331.5" cy="720" r="5"/>
+  </g>
+  <ellipse cx="153" cy="629" rx="56" ry="38.5" fill="#fbfaf7" stroke="#3a3632" stroke-width="2"/>
+  <g transform="translate(419 664) rotate(28.6)"><rect x="-26" y="-8" width="66" height="16" fill="#fbfaf7" stroke="#3a3632" stroke-width="2"/></g>
+  <g font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#6f685e" text-anchor="middle" font-weight="600" letter-spacing="1">
+    <text x="300" y="104">ALTAR</text>
+    <text x="300" y="48" fill="#4f7a93">ESPELHO D'ÁGUA</text>
+    <text x="153" y="634">BATISTÉRIO</text>
+    <text x="482" y="720">CAMPANÁRIO</text>
+    <text x="202" y="734">EVANGELISTAS</text>
+    <text x="300" y="770">PRAÇA</text>
+  </g>
+</svg>

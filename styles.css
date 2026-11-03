@@ -1,0 +1,250 @@
+:root {
+  --accent: #e8b04b;
+  --glass: rgba(18, 18, 20, 0.62);
+  --glass-strong: rgba(18, 18, 20, 0.86);
+  --line: rgba(255, 255, 255, 0.14);
+  --text: #f5f3ef;
+  --muted: rgba(245, 243, 239, 0.7);
+  --radius: 14px;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0d0d0f;
+  color: var(--text);
+}
+
+#viewer {
+  position: fixed;
+  inset: 0;
+}
+
+/* ---------- Marca ---------- */
+.brand {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+.brand h1 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.brand p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+
+.demo-banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  background: var(--accent);
+  color: #1a1408;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.demo-banner code { font-weight: 600; }
+
+/* ---------- Ayuda inicial ---------- */
+.hint {
+  position: fixed;
+  left: 50%;
+  top: 64px;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.hint.gone { opacity: 0; }
+
+/* ---------- Salas ---------- */
+.rooms {
+  position: fixed;
+  left: 16px;
+  bottom: 60px;
+  z-index: 100;
+  display: flex;
+  gap: 6px;
+  max-width: calc(100vw - 260px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.rooms::-webkit-scrollbar { display: none; }
+.rooms button {
+  flex: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 8px 14px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.rooms button:hover { background: var(--glass-strong); }
+.rooms button.active { background: var(--text); color: #111; border-color: transparent; }
+
+/* ---------- Puntos de producto ---------- */
+.hotspot {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.hotspot::before, .hotspot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #111;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+}
+.hotspot::before { width: 14px; height: 2px; }
+.hotspot::after { width: 2px; height: 14px; }
+.hotspot:hover { transform: scale(1.12); }
+.psv-marker:has(.hotspot)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  animation: pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.9; }
+  to { transform: scale(1.9); opacity: 0; }
+}
+
+/* ---------- Ficha de producto ---------- */
+.product {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 110;
+  width: 320px;
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+  background: var(--glass-strong);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transform: translateX(calc(100% + 24px));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.product.open { transform: none; }
+.product-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.4);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.product-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+.product-body { padding: 18px 18px 20px; }
+.product-name { margin: 0 32px 4px 0; font-size: 18px; font-weight: 600; }
+.product-price { margin: 0 0 10px; font-size: 16px; color: var(--accent); font-weight: 600; }
+.product-desc { margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.product-credit {
+  display: block;
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.product-credit:hover { text-decoration: underline; }
+.product-cta {
+  display: block;
+  margin-top: 16px;
+  padding: 11px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #25d366;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* ---------- Transición de caminar ---------- */
+.walk-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 50%;
+}
+.walk-overlay.visible { opacity: 1; }
+.walk-overlay.go {
+  opacity: 0;
+  transform: scale(1.55);
+  filter: blur(5px);
+  transition:
+    transform var(--paso) cubic-bezier(0.33, 0, 0.2, 1),
+    filter var(--paso) ease-in,
+    opacity calc(var(--paso) * 0.8) cubic-bezier(0.45, 0, 0.55, 1) calc(var(--paso) * 0.1);
+}
+
+/* ---------- Ajustes del visor ---------- */
+.psv-navbar { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.psv-map { border-radius: var(--radius); }
+.psv-map__container { background: #f4f1ea; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 640px) {
+  .brand { top: 12px; left: 12px; padding: 9px 12px; }
+  .brand h1 { font-size: 15px; }
+  .demo-banner { top: 76px; white-space: normal; text-align: center; width: calc(100% - 32px); border-radius: 12px; }
+  .hint { top: auto; bottom: 108px; width: calc(100% - 32px); text-align: center; border-radius: 12px; }
+  .rooms { left: 16px; right: 16px; max-width: none; bottom: 56px; }
+  .product {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 70%;
+    border-radius: var(--radius) var(--radius) 0 0;
+    transform: translateY(100%);
+  }
+  .product.open { transform: none; }
+}
